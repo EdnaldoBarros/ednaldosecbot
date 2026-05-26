@@ -83,3 +83,39 @@ async def main():
 # Execução
 if __name__ == "__main__":
     asyncio.run(main())
+
+# Help
+@dp.message(Command("help"))
+async def help(message: types.Message):
+
+    texto = """🤖 EdnaldoSecBot - Help
+    Available Commands 
+    /start - Start bot
+    /help - Show this help message
+    /ping - Sever status
+    /about - About project
+    """
+
+    await message.answer(texto)
+
+# Ping
+@dp.message(Command("ping"))
+async def ping(message: types.Message):
+
+    await message.answer(
+        "🏓 Pong! bot is online."
+    )
+
+# About
+@dp.message(Command("about"))
+async def about(message: types.Message):
+
+    texto = """
+🤖 EdnaldoSecBot
+
+Cyber Defense +  FullStack Engineering + AI
+
+Built by Ednaldo Barros
+"""
+
+    await message.answer(texto)
