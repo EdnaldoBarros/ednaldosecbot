@@ -137,25 +137,9 @@ async def ask_ai(message: types.Message):
         )
         return
 
-    resposta = client.chat.completions.create(
-        model="gpt-4.1-mini",
-        messages=[
-            {
-                "role": "system",
-                "content": (
-                    "You are a cybersecurity and technology assistant."
-                )
-            },
-            {
-                "role": "user",
-                "content": pergunta
-            }
-        ]
+    await message.answer(
+        f"🧠 Pergunta recebida: {pergunta}"
     )
-
-    texto = resposta.choices[0].message.content
-
-    await message.answer(texto)
 
 # Execução
 if __name__ == "__main__":
