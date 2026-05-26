@@ -126,6 +126,7 @@ Built by Ednaldo Barros
 
     await message.answer(texto)
 
+# Python AI
 @dp.message(Command("ask"))
 async def ask_ai(message: types.Message):
 
