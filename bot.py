@@ -1,4 +1,4 @@
-from  openai import OpenAI
+from openai import OpenAI
 from aiogram import Bot, Dispatcher, types
 from aiogram.filters import Command
 from aiogram.types import (
@@ -88,9 +88,7 @@ async def main():
 
     await dp.start_polling(bot)
 
-# Execução
-if __name__ == "__main__":
-    asyncio.run(main())
+
 
 # Help
 @dp.message(Command("help"))
@@ -158,3 +156,7 @@ async def ask_ai(message: types.Message):
     texto = resposta.choices[0].message.content
 
     await message.answer(texto)
+
+# Execução
+if __name__ == "__main__":
+    asyncio.run(main())
