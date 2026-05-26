@@ -1,3 +1,4 @@
+from  openai import OpenAI
 from aiogram import Bot, Dispatcher, types
 from aiogram.filters import Command
 from aiogram.types import (
@@ -13,6 +14,13 @@ load_dotenv()
 
 # Token
 TOKEN = os.getenv("BOT_TOKEN")
+
+# OpenAI API Key
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+
+client = OpenAI(
+    api_key=OPENAI_API_KEY
+)
 
 # Bot
 bot = Bot(token=TOKEN)
@@ -117,5 +125,36 @@ Cyber Defense +  FullStack Engineering + AI
 
 Built by Ednaldo Barros
 """
+
+    await message.answer(texto)
+
+@dp.message(Command("ask"))
+async def ask_ai(message: types.Message):
+
+    pergunta = message.text.replace("/ask", "").strip()
+
+    if not pergunta:
+        await message.answer(
+            "❌ Use: /ask your question"
+        )
+        return
+
+    resposta = client.chat.completions.create(
+        model="gpt-4.1-mini",
+        messages=[
+            {
+                "role": "system",
+                "content": (
+                    "You are a cybersecurity and technology assistant."
+                )
+            },
+            {
+                "role": "user",
+                "content": pergunta
+            }
+        ]
+    )
+
+    texto = resposta.choices[0].message.content
 
     await message.answer(texto)
