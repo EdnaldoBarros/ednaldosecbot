@@ -130,14 +130,26 @@ Built by Ednaldo Barros
 @dp.message(Command("ask"))
 async def ask_ai(message: types.Message):
 
+    pergunta = message.text.replace("/ask", "").strip()
+
+    if not pergunta:
+        await message.answer(
+            "❌ Use: /ask your question"
+        )
+        return
+
     try:
 
         resposta = client.chat.completions.create(
             model="gpt-4.1-mini",
             messages=[
                 {
+                    "role": "system",
+                    "content": "You are a cybersecurity assistant."
+                },
+                {
                     "role": "user",
-                    "content": "Hello"
+                    "content": pergunta
                 }
             ]
         )
@@ -146,10 +158,10 @@ async def ask_ai(message: types.Message):
 
         await message.answer(texto)
 
-    except Exception as e:
+    except Exception:
 
         await message.answer(
-            f"❌ Error:\n{e}"
+            "⚠️ AI temporarily unavailable."
         )
 
 # Execução
