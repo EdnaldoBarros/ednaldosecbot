@@ -129,17 +129,27 @@ Built by Ednaldo Barros
 @dp.message(Command("ask"))
 async def ask_ai(message: types.Message):
 
-    pergunta = message.text.replace("/ask", "").strip()
+    try:
 
-    if not pergunta:
-        await message.answer(
-            "❌ Use: /ask your question"
+        resposta = client.chat.completions.create(
+            model="gpt-4.1-mini",
+            messages=[
+                {
+                    "role": "user",
+                    "content": "Hello"
+                }
+            ]
         )
-        return
 
-    await message.answer(
-        f"🧠 Pergunta recebida: {pergunta}"
-    )
+        texto = resposta.choices[0].message.content
+
+        await message.answer(texto)
+
+    except Exception as e:
+
+        await message.answer(
+            f"❌ Error:\n{e}"
+        )
 
 # Execução
 if __name__ == "__main__":
